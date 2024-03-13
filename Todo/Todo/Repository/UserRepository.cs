@@ -1,6 +1,6 @@
 ﻿namespace Todo.Repository
 {
-    using Microsoft.IdentityModel.Tokens;
+    using BCrypt.Net;
     using Todo.Interfaces;
     using Todo.Models;
     using Todo.Data;
@@ -21,12 +21,21 @@
                 return false;
             }
 
+            // Hash the password here...
+            user.Password = BCrypt.HashPassword(user.Password);
             this._context.Users.Add(user);
             this._context.SaveChanges();
             return true;
         }
 
         public User? GetUser(string username, string password)
-        => this._context.Users.FirstOrDefault(user => user.Username.Equals(username) && user.Password.Equals(password));
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Username.Equals(username));
+            if (user != null && BCrypt.Verify(password, user.Password))
+            {
+                return user;
+            }
+            return null;
+        }
     }
 }
