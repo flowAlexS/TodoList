@@ -45,5 +45,25 @@ namespace Api.Controllers
 
             return CreatedAtAction(nameof(this.GetById), new { id = task.Id }, task.ToTodoTaksDto());
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] TodoTaskDto todoTaskDto)
+        {
+            var task = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+
+            if (task is null)
+            {
+                return NotFound();
+            }
+
+            task.Title = todoTaskDto.Title;
+            task.Note = todoTaskDto.Note;
+            task.Completed = todoTaskDto.Completed;
+
+            this._context.SaveChanges();
+
+            return Ok(task.ToTodoTaksDto());
+        }
     }
 }
