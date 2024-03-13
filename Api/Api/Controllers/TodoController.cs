@@ -1,4 +1,5 @@
 ﻿using Api.Data;
+using Api.DTOs.Todo;
 using Api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,16 @@ namespace Api.Controllers
             }
 
             return Ok(todo.ToTodoTaksDto());
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] TodoTaskDto todoTaskDto)
+        {
+            var task = todoTaskDto.ToTodoTaskFromTaskDto();
+            this._context.Add(task);
+            this._context.SaveChanges();
+
+            return CreatedAtAction(nameof(this.GetById), new { id = task.Id }, task.ToTodoTaksDto());
         }
     }
 }
