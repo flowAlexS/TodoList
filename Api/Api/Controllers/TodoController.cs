@@ -2,6 +2,7 @@
 using Api.DTOs.Todo;
 using Api.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -15,18 +16,20 @@ namespace Api.Controllers
         => this._context = context;
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var todos = this._context.TodoTasks.Select(todo => todo.ToTodoTaksDto()).ToList();
+            var todos = await this._context.TodoTasks.ToListAsync();
 
-            return Ok(todos);
+            var todosDto = todos.Select(task => task.ToTodoTaksDto());
+
+            return Ok(todosDto);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var todo = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+            var todo = await this._context.TodoTasks.FirstOrDefaultAsync(task => task.Id.Equals(id));
 
             if (todo is null)
             {
@@ -37,20 +40,20 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] TodoTaskDto todoTaskDto)
+        public async Task<IActionResult> Create([FromBody] TodoTaskDto todoTaskDto)
         {
             var task = todoTaskDto.ToTodoTaskFromTaskDto();
-            this._context.Add(task);
-            this._context.SaveChanges();
+            await this._context.AddAsync(task);
+            await this._context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(this.GetById), new { id = task.Id }, task.ToTodoTaksDto());
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] TodoTaskDto todoTaskDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TodoTaskDto todoTaskDto)
         {
-            var task = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+            var task = await this._context.TodoTasks.FirstOrDefaultAsync(task => task.Id.Equals(id));
 
             if (task is null)
             {
@@ -61,16 +64,16 @@ namespace Api.Controllers
             task.Note = todoTaskDto.Note;
             task.Completed = todoTaskDto.Completed;
 
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
 
             return Ok(task.ToTodoTaksDto());
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var task = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+            var task = await this._context.TodoTasks.FirstOrDefaultAsync(task => task.Id.Equals(id));
 
             if (task is null)
             {
@@ -78,7 +81,7 @@ namespace Api.Controllers
             }
 
             this._context.Remove(task);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
 
             return NoContent();
         }
