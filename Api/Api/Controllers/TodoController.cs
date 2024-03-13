@@ -65,5 +65,22 @@ namespace Api.Controllers
 
             return Ok(task.ToTodoTaksDto());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var task = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+
+            if (task is null)
+            {
+                return NotFound();
+            }
+
+            this._context.Remove(task);
+            this._context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
