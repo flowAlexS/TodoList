@@ -20,5 +20,19 @@ namespace Api.Controllers
 
             return Ok(todos);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var todo = this._context.TodoTasks.FirstOrDefault(task => task.Id.Equals(id));
+
+            if (todo is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(todo.ToTodoTaksDto());
+        }
     }
 }
