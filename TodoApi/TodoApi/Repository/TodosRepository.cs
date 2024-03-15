@@ -22,6 +22,13 @@ namespace TodoApi.Repository
             return task;
         }
 
+        public async Task<TodoTask> DeleteAsync(TodoTask task)
+        {
+            this._context.Tasks.Remove(task);
+            await this._context.SaveChangesAsync();
+            return task;
+        }
+
         public async Task<List<TodoTask>> GetAllAsync(AppUser user)
         => await this._context.Tasks.Where(x => x.UserId.Equals(user.Id))
         .Select(task => new TodoTask()

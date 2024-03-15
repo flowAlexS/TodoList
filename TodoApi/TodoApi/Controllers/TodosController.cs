@@ -103,5 +103,24 @@ namespace TodoApi.Controllers
                 ? NotFound()
                 : Ok(result.ToDto());
         }
+
+        [HttpDelete("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var username = User.GetUsername();
+            var appUser = await this._userManager.FindByNameAsync(username);
+
+            if (appUser is null)
+                return NotFound();
+
+
+            var task = await this._todosRepository.GetByIdAsync(appUser, id);
+            if (task is null)
+                return NotFound();
+
+            await this._todosRepository.DeleteAsync(task);
+            return NoContent();
+        }
     }
 }

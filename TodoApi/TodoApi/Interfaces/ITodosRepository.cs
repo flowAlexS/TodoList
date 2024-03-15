@@ -11,5 +11,7 @@ namespace TodoApi.Interfaces
         Task<TodoTask> CreateAsync(AppUser user, TodoTask task);
 
         Task<TodoTask> UpdateTaskAsync(TodoTask task, TodoTask updatedTask);
+
+        Task<TodoTask> DeleteAsync(TodoTask task);
     }
 }
