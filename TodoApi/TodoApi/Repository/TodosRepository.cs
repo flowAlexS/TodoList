@@ -17,6 +17,7 @@ namespace TodoApi.Repository
             task.UserId = user.Id;
             task.User = user;
 
+            await this._context.Tasks.AddAsync(task);
             await this._context.SaveChangesAsync();
             return task;
         }
