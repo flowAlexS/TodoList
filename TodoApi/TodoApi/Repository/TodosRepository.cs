@@ -38,5 +38,15 @@ namespace TodoApi.Repository
         => await this._context.Tasks.FirstOrDefaultAsync(
             task => task.UserId.Equals(user.Id)
             && task.Id.Equals(id));
+
+        public async Task<TodoTask> UpdateTaskAsync(TodoTask task, TodoTask updatedTask)
+        {
+            task.Title = updatedTask.Title;
+            task.Note = updatedTask.Note;
+            task.Completed = updatedTask.Completed;
+
+            await this._context.SaveChangesAsync();
+            return task;
+        }
     }
 }

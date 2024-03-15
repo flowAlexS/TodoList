@@ -9,5 +9,7 @@ namespace TodoApi.Interfaces
         Task<TodoTask?> GetByIdAsync(AppUser user, int id);
 
         Task<TodoTask> CreateAsync(AppUser user, TodoTask task);
+
+        Task<TodoTask> UpdateTaskAsync(TodoTask task, TodoTask updatedTask);
     }
 }

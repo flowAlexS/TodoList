@@ -76,5 +76,32 @@ namespace TodoApi.Controllers
 
             return Ok(todo.ToDto());
         }
+
+        [HttpPut("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateTodoTask(
+            [FromRoute] int id,
+            [FromBody] UpdateTodoTaskDto updateTodoTaskDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var username = User.GetUsername();
+            var appUser = await this._userManager.FindByNameAsync(username);
+
+            if (appUser is null)
+                return NotFound();
+
+
+            var task = await this._todosRepository.GetByIdAsync(appUser, id);
+            if (task is null)
+                return NotFound();
+
+            var result = await this._todosRepository.UpdateTaskAsync(task, updateTodoTaskDto.ToTodoTask());
+
+            return result is null
+                ? NotFound()
+                : Ok(result.ToDto());
+        }
     }
 }

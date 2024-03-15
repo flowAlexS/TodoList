@@ -21,5 +21,13 @@ namespace TodoApi.Mappers
             Note = taskDto.Note,
             Completed = taskDto.Completed,
         };
+
+        public static TodoTask ToTodoTask(this UpdateTodoTaskDto taskDto)
+        => new()
+        {
+            Title = taskDto.Title,
+            Note = taskDto.Note,
+            Completed = taskDto.Completed,
+        };
     }
 }
