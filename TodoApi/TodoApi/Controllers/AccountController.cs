@@ -27,7 +27,7 @@ namespace TodoApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto) // Impl for this
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace TodoApi.Controllers
                             UserName = appUser.UserName,
                             Email = appUser.Email,
                             Token = this._tokenService.CreateToken(appUser),
-                        }); // Return a token later here.
+                        });
                     }
                     else
                     {

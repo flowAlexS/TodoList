@@ -11,6 +11,8 @@ namespace TodoApi.Data
         {
         }
 
+        public DbSet<TodoTask> Tasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
