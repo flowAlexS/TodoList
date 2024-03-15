@@ -13,5 +13,13 @@ namespace TodoApi.Mappers
             Note = task.Note,
             Completed = task.Completed,
         };
+
+        public static TodoTask ToTodoTask(this CreateTodoTaskDtoRequest taskDto)
+        => new()
+        {
+            Title = taskDto.Title,
+            Note = taskDto.Note,
+            Completed = taskDto.Completed,
+        };
     }
 }

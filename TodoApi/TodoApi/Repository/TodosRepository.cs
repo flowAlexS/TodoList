@@ -12,6 +12,14 @@ namespace TodoApi.Repository
         public TodosRepository(ApplicationDBContext context)
         => this._context = context;
 
+        public async Task<TodoTask> CreateAsync(AppUser user, TodoTask task)
+        {
+            task.UserId = user.Id;
+            task.User = user;
+
+            await this._context.SaveChangesAsync();
+            return task;
+        }
 
         public async Task<List<TodoTask>> GetAllAsync(AppUser user)
         => await this._context.Tasks.Where(x => x.UserId.Equals(user.Id))

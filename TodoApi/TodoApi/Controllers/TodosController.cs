@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TodoApi.DTOs.Todo;
 using TodoApi.Interfaces;
 using TodoApi.Mappers;
 using TodoApi.Models;
@@ -27,6 +28,10 @@ namespace TodoApi.Controllers
         {
             var username = User.GetUsername();
             var appUser = await this._userManager.FindByNameAsync(username);
+            
+            if (appUser is null)
+                return BadRequest("User Not Found");
+
             var todos = await this._todosRepository.GetAllAsync(appUser);
 
             var dtos = todos.Select(task => task.ToDto());
@@ -39,12 +44,35 @@ namespace TodoApi.Controllers
         {
             var username = User.GetUsername();
             var appUser = await this._userManager.FindByNameAsync(username);
+
+            if (appUser is null)
+                return BadRequest("User Not Found");
+
             var todo = await this._todosRepository.GetByIdAsync(appUser, id);
 
             if (todo is null)
             {
                 return NotFound();
             }
+
+            return Ok(todo.ToDto());
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateTodoTask([FromBody] CreateTodoTaskDtoRequest createTodoTaskDtoRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var username = User.GetUsername();
+            var appUser = await this._userManager.FindByNameAsync(username);
+
+            if (appUser is null)
+                return NotFound();
+
+            var todo = createTodoTaskDtoRequest.ToTodoTask();
+            await this._todosRepository.CreateAsync(appUser, todo);
 
             return Ok(todo.ToDto());
         }
