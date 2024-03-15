@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Interfaces;
+using TodoApi.Mappers;
 using TodoApi.Models;
 
 namespace TodoApi.Controllers
@@ -28,7 +29,24 @@ namespace TodoApi.Controllers
             var appUser = await this._userManager.FindByNameAsync(username);
             var todos = await this._todosRepository.GetAllAsync(appUser);
 
-            return Ok(todos);
+            var dtos = todos.Select(task => task.ToDto());
+            return Ok(dtos);
+        }
+
+        [HttpGet("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var username = User.GetUsername();
+            var appUser = await this._userManager.FindByNameAsync(username);
+            var todo = await this._todosRepository.GetByIdAsync(appUser, id);
+
+            if (todo is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(todo.ToDto());
         }
     }
 }
