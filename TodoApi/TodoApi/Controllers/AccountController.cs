@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.DTOs.Account;
+using TodoApi.Interfaces;
 using TodoApi.Models;
 
 namespace TodoApi.Controllers
@@ -10,10 +11,12 @@ namespace TodoApi.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
         {
             this._userManager = userManager;
+            this._tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -37,7 +40,12 @@ namespace TodoApi.Controllers
                     var roleResult = await this._userManager.AddToRoleAsync(appUser, "User");
                     if (roleResult.Succeeded)
                     {
-                        return Ok("User Created"); // Return a token later here.
+                        return Ok(new NewUserDto()
+                        {
+                            UserName = appUser.UserName,
+                            Email = appUser.Email,
+                            Token = this._tokenService.CreateToken(appUser),
+                        }); // Return a token later here.
                     }
                     else
                     {
