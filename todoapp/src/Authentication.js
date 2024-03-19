@@ -1,14 +1,24 @@
+import { useState } from "react";
 import Login from "./Login";
+import Register from "./Register";
 
 const Authentication = () => {
+    var [isLogin, setIsLogin] = useState(true);
+    
+    const handleHeaderClick = () => {
+        setIsLogin(!isLogin);
+    }
+
     return ( 
         <div className="authentication">
             <div className="authentication-header">
-                <button>Login</button>
-                <button>Register</button>
+                <button className = { isLogin ? 'selected' : '' }
+                onClick = {handleHeaderClick }>Login</button>
+                <button className = { !isLogin ? 'selected' : '' }
+                onClick = { handleHeaderClick }>Register</button>
             </div>
             <div className="authentication-form">
-                <Login />
+                {isLogin ? <Login /> : <Register />}
             </div>
         </div>
      );
