@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SetCookie, GetCookie } from "./CookieHandler";
+import PostAccount from "./HandleAuthentication";
 
 const Login = () => {
     const [userName, setUserName] = useState('');
@@ -8,34 +9,19 @@ const Login = () => {
 
     const handleRegister = (e) => {
         const loginModel = { userName, password }
+        let result = PostAccount(loginModel, "api/account/login");
 
-        fetch('api/account/login',
+        if (result)
         {
-            method: "POST",
-            headers: {
-                "Accept": "*/*",
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(loginModel)
-        })
-        .then(res => {
-            if (res.ok)
-            {
-                return res.json();
-            }
-
+            // Here we want to redirect to home...
+        }
+        else
+        {
             setPassword('');
             setUserName('');
             setIsInvalid(true);
             setTimeout(() => setIsInvalid(false), 3000);
-            throw Error("Username or passwword incorrect");
-        })
-        .then(res => {
-            SetCookie(res);
-            console.log(document.cookie);
-        })
-        .catch(e => console.log(e.message));
-
+        }
 
         e.preventDefault();
     }

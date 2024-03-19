@@ -1,42 +1,30 @@
 import { useState } from "react";
-import { SetCookie } from "./CookieHandler";
+import { GetCookie, SetCookie } from "./CookieHandler";
+import PostAccount from "./HandleAuthentication";
 
 const Register = () => {
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
- 
+    const [isInvalid, setIsInvalid] = useState(false);
+
     const handleRegistration = (e) => {
-        e.preventDefault();
-
         const registerModel = { userName, email, password }
+        let result = PostAccount(registerModel, "api/account/register");
         
-        console.log(registerModel);
-
-        fetch('api/account/register', {
-            method: "POST",
-            headers: {
-                "Accept": "*/*",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(registerModel)
-        })
-        .then(res => {
-            if (res.ok)
-            {
-                console.log(res.json());
-                return res.json();
-            }
-
-            throw Error('Something went wrong');
+        if (result === true)
+        {
+        }
+        else {
             setUserName('');
             setEmail('');
             setPassword('');
-        })
-        .then(res => SetCookie(res))
-        .catch(e => {
-            console.log(e.message);
-        });
+            setIsInvalid(true);
+            setTimeout(() => setIsInvalid(false), 3000);
+        }
+
+        e.preventDefault();
+
     }
 
     return ( 
@@ -68,6 +56,7 @@ const Register = () => {
             <button>
                 Register
             </button>
+            { isInvalid && <p>Invalid Data</p>}
         </form>
      );
 }
