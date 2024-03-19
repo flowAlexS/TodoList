@@ -8,7 +8,8 @@ body {
   background-color: #777;
   box-sizing: border-box;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 code {
@@ -26,6 +27,20 @@ a {
   background-color: #000;
   padding: 0.5rem;
   color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0.5rem 2rem;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
 }
 
 .navbar a {
@@ -112,9 +127,57 @@ a {
   background-color: #f40;
 }
 
+.todo--section {
+  margin: 2rem auto;
+  width: 70%;
+  border-radius: 15px;
+  padding: 2rem 1rem;
+}
+
+.todo--section__dark {
+  background-color: #333;
+}
+
+.todo--section__completed {
+  background-color: #040;
+  color: #000;
+}
+
+.todo--section:hover{
+  box-shadow: 1px 1px 10px 5px #999;
+}
+
+.todo--section h2 {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.todo--section p {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.todo--section button {
+  background-color: #f00;
+  border-radius: 15px;
+  width: 25%;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  font-weight: bold;
+  border: 0;
+  margin-top: 1rem;
+}
+
+.todo--section button:hover
+{
+  background-color: #f40;
+  transform: scale(1.01);
+}
+
 @media only screen and (max-width: 767px)
 {
   .authentication {
     width: 80%;
   } 
 }
+
