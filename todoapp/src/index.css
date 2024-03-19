@@ -5,9 +5,84 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #777;
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #000;
+  padding: 0.5rem;
+  color: #fff;
+}
+
+.navbar a {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.navbar a:hover {
+  color: #0b3;
+}
+
+/* Authentication section */
+
+.authentication {
+  background-color: #000;
+  margin: 10rem auto;
+  width: 50%;
+  border-radius: 10px; /* Add border radius to the parent */
+  overflow: hidden; /* Prevent child elements from overriding rounded corners */
+}
+
+.authentication-header {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid #fff;
+}
+
+.authentication-header button {
+  flex: 1; /* Use flex property to distribute space evenly */
+  background-color: #222;
+  border: 0;
+  color: #fff;
+  padding: 0.25rem 1rem;
+  font-weight: bold;
+}
+
+.authentication-header button:hover {
+  background-color: #555;
+}
+
+.authentication-form {
+  color: #fff;
+  margin: 2rem 1rem;
+}
+
+.authentication-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.authentication-form form label {
+  color:#0b3;
+}
+
+.authentication-form form input {
+  margin: 0.5rem;
+  border-radius: 15px;
+  width: 50%;
+  padding: 0.1rem 0.5rem;
 }
