@@ -1,31 +1,40 @@
-const Todos = ({ data }) => {
-    console.log(data);
+import { GetCookie } from "./CookieHandler";
 
+const Todos = ({ data }) => {
+    const handleCompletion = (todo) => {
+        todo.completed = !todo.completed;
+
+        fetch(`/api/todos/${todo.id}`, {
+            method: "PUT",
+            headers: {
+                "Accept": "*/*",
+                "Authorization": `Bearer ${GetCookie().token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(todo),
+        })
+        .then(() => {
+            window.location.reload();
+        });
+    }
 
     return (
         <>
-            <nav className="navbar">
-                <a href="/">Todo app</a>
-                <div className="nav-list">
-                    <li className="nav__list">
-                        <a className href="/">View All</a>
-                        <a className href="/">Create Task</a>
-                    </li>
-                </div>
-            </nav>
             { 
                 data.map(todo => (
-                    <a href="/">
-                        <section className={todo.completed ? "todo--section todo--section__completed" : "todo--section todo--section__dark"} key={todo.id}>
+                    <section className={todo.completed ? "todo--section todo--section__completed" : "todo--section todo--section__dark"}
+                    key= { todo.id }>
+                        <a href="/">
                             <div class="todo--header">
                                 <h2>{ todo.title }</h2>
                                 <p> { todo.note } </p>
                             </div>
-                            <div className="todo--commands">
-                                <button className={todo.completed ? "completed" : ""}>{todo.completed ? "Uncomplete" : "Complete"}</button>
-                            </div>
-                        </section>
-                    </a>
+                        </a>
+                        <div className="todo--commands">
+                            <button
+                            onClick={(e) => handleCompletion(todo)}>{todo.completed ? "Uncomplete" : "Complete"}</button>
+                        </div>
+                    </section>
                 ))};
         </>
     );

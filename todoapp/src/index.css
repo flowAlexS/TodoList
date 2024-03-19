@@ -32,6 +32,12 @@ a {
   align-items: center;
 }
 
+.special {
+  color: red;
+  font-weight: bold;
+  font-style: italic;
+}
+
 .nav-list {
   display: flex;
   flex-direction: row;

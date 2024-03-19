@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { GetCookie } from "./CookieHandler";
-import Todos from "./Todos";
 import Authentication from "./Authentication";
+import AuthorizedSection from "./AuthorizedSection";
 
 const Home = () => {
     const [data, setData] = useState(null);
 
     var auth = GetCookie();
-    console.log(auth);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,10 +35,8 @@ const Home = () => {
         fetchData();
     }, []);
 
-
-
     return ( <>
-        {data ? <Todos data={ data }/> : <Authentication />}
+        {data ? <AuthorizedSection data={ data }/> : <Authentication />}
     </>
     )
 }
