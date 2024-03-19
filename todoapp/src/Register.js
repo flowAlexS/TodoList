@@ -14,6 +14,7 @@ const Register = () => {
         
         if (result === true)
         {
+            window.location.reload();
         }
         else {
             setUserName('');

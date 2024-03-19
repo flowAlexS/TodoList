@@ -13,7 +13,7 @@ const Login = () => {
 
         if (result)
         {
-            // Here we want to redirect to home...
+            window.location.reload();
         }
         else
         {
