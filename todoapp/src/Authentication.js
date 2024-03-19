@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
+import { GetCookie } from "./CookieHandler";
 
 const Authentication = () => {
     var [isLogin, setIsLogin] = useState(true);
@@ -8,6 +9,8 @@ const Authentication = () => {
     const handleHeaderClick = () => {
         setIsLogin(!isLogin);
     }
+
+    console.log(GetCookie());
 
     return ( 
         <div className="authentication">
