@@ -90,6 +90,13 @@ a {
   padding: 0.1rem 0.5rem;
 }
 
+.authentication-form p {
+  background-color: #f40;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
 .authentication-form form button {
   background-color: #f00;
   border-radius: 15px;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SetCookie, GetCookie } from "./CookieHandler";
 
 const Login = () => {
     const [userName, setUserName] = useState('');
@@ -26,9 +27,13 @@ const Login = () => {
             setPassword('');
             setUserName('');
             setIsInvalid(true);
+            setTimeout(() => setIsInvalid(false), 3000);
             throw Error("Username or passwword incorrect");
         })
-        .then(res => console.log(res))
+        .then(res => {
+            SetCookie(res);
+            console.log(document.cookie);
+        })
         .catch(e => console.log(e.message));
 
 
@@ -54,7 +59,8 @@ const Login = () => {
             <button>
                 Login
             </button>
-        </form>        
+            { isInvalid && <p> Invalid username or password </p> }
+        </form>      
     );
 }
  
