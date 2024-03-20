@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { GetCookie } from "./CookieHandler";
 
 const Todos = ({ data }) => {
@@ -24,12 +25,12 @@ const Todos = ({ data }) => {
                 data.map(todo => (
                     <section className={todo.completed ? "todo--section todo--section__completed" : "todo--section todo--section__dark"}
                     key= { todo.id }>
-                        <a href="/">
+                        <Link to={ `/${todo.id}` }>
                             <div class="todo--header">
                                 <h2>{ todo.title }</h2>
                                 <p> { todo.note } </p>
                             </div>
-                        </a>
+                        </Link>
                         <div className="todo--commands">
                             <button
                             onClick={(e) => handleCompletion(todo)}>{todo.completed ? "Uncomplete" : "Complete"}</button>

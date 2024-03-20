@@ -180,6 +180,77 @@ a {
   transform: scale(1.01);
 }
 
+/* Single Todo Section */
+
+.single_todo {
+  background-color: #333;
+  margin: 3rem auto;
+  width: 70%;
+  padding: 2rem;
+  border-radius: 15px;
+}
+
+.single_todo .single_todo--content {
+  color: #fff;
+}
+
+#todoTitle{
+  background-color: inherit;
+  border: 0;
+  width: 100%;
+  border-bottom: 1px solid white;;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.6rem;
+  resize: none;
+  outline: none;
+}
+
+#todoTitle:hover {
+  border-bottom: 1px solid red;
+}
+
+#todoTitle:focus{
+  border-bottom: 1px solid red;
+  color: red;
+}
+
+#todoContent {
+  margin: 1rem 0;
+  background-color: inherit;
+  border: 0;
+  width: 100%;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.2rem;
+  resize: none;
+  outline: none;
+}
+
+#todoContent:focus{
+  color: red;
+}
+
+.single_todo .single_todo--operations {
+  display: flex;
+  justify-content: space-between;
+}
+
+.single_todo .single_todo--operations button {
+  background-color: #f00;
+  border: 0;
+  padding: 0.5rem 2rem;
+  border-radius: 15px;;
+  width: 20%;
+  color: #fff;
+}
+
+.single_todo .single_todo--operations button:hover {
+  background-color: #f40;
+  transform: scale(1.1);
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 767px)
 {
   .authentication {
