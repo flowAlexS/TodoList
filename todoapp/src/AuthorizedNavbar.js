@@ -1,4 +1,5 @@
 import { GetCookie } from "./CookieHandler";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const AuthorizedNavbar = () => {
     return (
@@ -6,8 +7,8 @@ const AuthorizedNavbar = () => {
         <p>Hello <span class="special">{GetCookie().userName}</span></p>
         <div className="nav-list">
             <li className="nav__list">
-                <a className href="/">View All</a>
-                <a className href="/">Create Task</a>
+                <Link to="/">View All</Link>
+                <Link to="/create">Create Task</Link>
             </li>
         </div>
     </nav>

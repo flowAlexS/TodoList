@@ -219,6 +219,7 @@ a {
   margin: 1rem 0;
   background-color: inherit;
   border: 0;
+  border-bottom: 1px solid #fff;
   width: 100%;
   color: #fff;
   font-family: inherit;
@@ -227,7 +228,12 @@ a {
   outline: none;
 }
 
+#todoContent:hover{
+  border-bottom: 1px solid red;
+}
+
 #todoContent:focus{
+  border-bottom: 1px solid red;
   color: red;
 }
 
@@ -236,6 +242,7 @@ a {
   justify-content: space-between;
 }
 
+.single_todo button,
 .single_todo .single_todo--operations button {
   background-color: #f00;
   border: 0;
@@ -245,6 +252,28 @@ a {
   color: #fff;
 }
 
+.single_todo .single_todo--operations .done {
+  background-color: green;
+}
+
+.single_todo .single_todo--operations .disabled {
+  background-color: inherit;
+  border: 1px solid #fff;
+}
+
+.single_todo .single_todo--operations .disabled:hover {
+  background-color: inherit;
+  border: 1px solid #fff;
+}
+
+.single_todo p {
+  background-color: red;
+  color: #fff;
+  display: inline;
+  padding: 0.5rem;
+}
+
+.single_todo button:hover,
 .single_todo .single_todo--operations button:hover {
   background-color: #f40;
   transform: scale(1.1);

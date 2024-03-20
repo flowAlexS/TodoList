@@ -1,22 +1,12 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { GetCookie } from "./CookieHandler";
+import { SetCompletion } from "./TodoHandler"
 
 const Todos = ({ data }) => {
-    const handleCompletion = (todo) => {
+    const handleCompletion = async (todo) => {
         todo.completed = !todo.completed;
-
-        fetch(`/api/todos/${todo.id}`, {
-            method: "PUT",
-            headers: {
-                "Accept": "*/*",
-                "Authorization": `Bearer ${GetCookie().token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(todo),
-        })
-        .then(() => {
-            window.location.reload();
-        });
+        var res = await SetCompletion(todo);
+        window.location.reload();
     }
 
     return (
